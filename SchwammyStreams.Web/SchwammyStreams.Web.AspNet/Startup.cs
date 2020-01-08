@@ -32,6 +32,7 @@ namespace SchwammyStreams.Web.AspNet
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseBrowserLink();
             }
             else
             {

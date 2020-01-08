@@ -6,6 +6,12 @@
 
 
   <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\img\schwammy-transparent.png" />
   </ItemGroup>
 
 </Project>
