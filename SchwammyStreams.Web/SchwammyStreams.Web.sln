@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchwammyStreams.Web.AspNet", "SchwammyStreams.Web.AspNet\SchwammyStreams.Web.AspNet.csproj", "{ADB30323-510A-4801-9D49-8EEF0996FF25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchwammyStreams.Web.Api", "SchwammyStreams.Web.Api\SchwammyStreams.Web.Api.csproj", "{D7D94191-0575-4673-81E0-C54E836A2874}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ADB30323-510A-4801-9D49-8EEF0996FF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB30323-510A-4801-9D49-8EEF0996FF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB30323-510A-4801-9D49-8EEF0996FF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D94191-0575-4673-81E0-C54E836A2874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D94191-0575-4673-81E0-C54E836A2874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D94191-0575-4673-81E0-C54E836A2874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D94191-0575-4673-81E0-C54E836A2874}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
