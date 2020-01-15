@@ -25,10 +25,11 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             // ...
             // Use Repository Pattern
             // Use Unit Of Work Pattern
+            // Set Up DbContext the .NET Core way - for DI
 
 
             EpisodeHistoryOrchestrator o = new EpisodeHistoryOrchestrator();
-            o.GetHistory();
+            var history = o.GetHistory();
 
             return View();
         }
