@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SchwammyStreams.Backend.Orchestrators;
 using SchwammyStreams.Web.AspNet.Models;
 
 namespace SchwammyStreams.Web.AspNet.Controllers
@@ -20,6 +21,15 @@ namespace SchwammyStreams.Web.AspNet.Controllers
 
         public IActionResult Index()
         {
+            // Get list of old shows to display
+            // ...
+            // Use Repository Pattern
+            // Use Unit Of Work Pattern
+
+
+            EpisodeHistoryOrchestrator o = new EpisodeHistoryOrchestrator();
+            o.GetHistory();
+
             return View();
         }
 
