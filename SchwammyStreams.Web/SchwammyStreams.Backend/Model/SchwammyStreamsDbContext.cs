@@ -5,7 +5,12 @@ using System.Text;
 
 namespace SchwammyStreams.Backend.Model
 {
-    public class SchwammyStreamsDbContext: DbContext
+    public interface ISchwammyStreamsDbContext
+    {
+        DbSet<Episode> Episodes { get; set; }
+    }
+
+    public class SchwammyStreamsDbContext : DbContext, ISchwammyStreamsDbContext
     {
         public DbSet<Episode> Episodes { get; set; }
 

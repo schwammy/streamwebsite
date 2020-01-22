@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SchwammyStreams.Backend.Mini.Repositories;
+using SchwammyStreams.Backend.Mini.Validators;
 using SchwammyStreams.Backend.Model;
+using SchwammyStreams.Backend.Orchestrators;
 
 namespace SchwammyStreams.Web.AspNet
 {
@@ -24,8 +28,16 @@ namespace SchwammyStreams.Web.AspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<SchwammyStreamsDbContext>(options => options.use("Data Source=blog.db"));
             services.AddControllersWithViews();
+
+            services.AddDbContext<SchwammyStreamsDbContext>(
+                options => options.UseSqlServer(Configuration["ConnectionString:SchwammyStreamsConnection"]));
+
+            services.AddScoped<ISchwammyStreamsDbContext>(provider => provider.GetService<SchwammyStreamsDbContext>());
+
+            services.AddTransient<IEpisodeHistoryOrchestrator, EpisodeHistoryOrchestrator>();
+            services.AddTransient<IGetHistoryDtoValidator, GetHistoryDtoValidator>();
+            services.AddTransient<IEpisodeRepository, EpisodeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

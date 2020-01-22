@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SchwammyStreams.Backend.Dto;
 using SchwammyStreams.Backend.Orchestrators;
 using SchwammyStreams.Web.AspNet.Models;
 
@@ -13,10 +14,11 @@ namespace SchwammyStreams.Web.AspNet.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IEpisodeHistoryOrchestrator _episodeHistoryOrchestrator;
+        public HomeController(ILogger<HomeController> logger, IEpisodeHistoryOrchestrator episodeHistoryOrchestrator)
         {
             _logger = logger;
+            _episodeHistoryOrchestrator = episodeHistoryOrchestrator;
         }
 
         public IActionResult Index()
@@ -28,8 +30,7 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             // Set Up DbContext the .NET Core way - for DI
 
 
-            EpisodeHistoryOrchestrator o = new EpisodeHistoryOrchestrator();
-            var history = o.GetHistory();
+            var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1 });
 
             return View();
         }

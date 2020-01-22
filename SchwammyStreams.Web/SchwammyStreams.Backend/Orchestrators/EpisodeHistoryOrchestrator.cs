@@ -1,5 +1,8 @@
 ﻿using SchwammyStreams.Backend.Dto;
+using SchwammyStreams.Backend.Mini.Repositories;
+using SchwammyStreams.Backend.Mini.Validators;
 using SchwammyStreams.Backend.Model;
+using SchwammyStreams.Backend.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +10,46 @@ using System.Text;
 
 namespace SchwammyStreams.Backend.Orchestrators
 {
-    public class EpisodeHistoryOrchestrator
+    public interface IEpisodeHistoryOrchestrator
     {
-        public List<ShowHistoryDto> GetHistory()
+        GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto);
+    }
+
+    public class EpisodeHistoryOrchestrator : IEpisodeHistoryOrchestrator
+    {
+        private readonly IGetHistoryDtoValidator _getHistoryDtoValidator;
+        private readonly IEpisodeRepository _episodeRepository;
+        public EpisodeHistoryOrchestrator(IGetHistoryDtoValidator getHistoryDtoValidator, IEpisodeRepository episodeRepository)
         {
-            List<ShowHistoryDto> results = new List<ShowHistoryDto>();
+            _getHistoryDtoValidator = getHistoryDtoValidator;
+            _episodeRepository = episodeRepository;
+        }
+
+        public GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto)
+        {
+            // of course, result object can and will be made generic
+            GetEpisodeHistoryResult results = new GetEpisodeHistoryResult();
             //todo: Implement paging too.
+
+            results.Messages = _getHistoryDtoValidator.Validate(getHistoryDto);
+            if (results.Messages.Any())
+            {
+                results.Success = false;
+                return results;
+            }
+
 
             // steps
             // get the data for the shows
 
-            //this is just temp and will be refactored out
-            SchwammyStreamsDbContext context = new SchwammyStreamsDbContext();
-            //context.Episodes.Add(new Episode { Title = "Test" });
-            //context.SaveChanges();
 
-            var history = context.Episodes.ToList();
+            var history = _episodeRepository.All().ToList();
 
             // this needs to move out.
-            
-            foreach(var episode in history)
+
+            foreach (var episode in history)
             {
-                results.Add(new ShowHistoryDto { Id = episode.Id, Title = episode.Title, Details = episode.Details });
+                results.Results.Add(new ShowHistoryDto { Id = episode.Id, Title = episode.Title, Details = episode.Details });
             };
 
             // convert the data to dtos
