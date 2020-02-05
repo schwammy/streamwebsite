@@ -1,12 +1,9 @@
 ﻿using SchwammyStreams.Backend.Dto;
-using SchwammyStreams.Backend.Mini.Repositories;
+using SchwammyStreams.Backend.Mini.Converters;
+using SchwammyStreams.Backend.Mini.DataServices;
 using SchwammyStreams.Backend.Mini.Validators;
-using SchwammyStreams.Backend.Model;
 using SchwammyStreams.Backend.Results;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SchwammyStreams.Backend.Orchestrators
 {
@@ -18,11 +15,13 @@ namespace SchwammyStreams.Backend.Orchestrators
     public class EpisodeHistoryOrchestrator : IEpisodeHistoryOrchestrator
     {
         private readonly IGetHistoryDtoValidator _getHistoryDtoValidator;
-        private readonly IEpisodeRepository _episodeRepository;
-        public EpisodeHistoryOrchestrator(IGetHistoryDtoValidator getHistoryDtoValidator, IEpisodeRepository episodeRepository)
+        private readonly IEpisodeDataService _episodeDataService;
+        private readonly IEpisodeHistoryConverter _episodeHistoryConverter;
+        public EpisodeHistoryOrchestrator(IGetHistoryDtoValidator getHistoryDtoValidator, IEpisodeDataService episodeDataService, IEpisodeHistoryConverter episodeHistoryConverter)
         {
             _getHistoryDtoValidator = getHistoryDtoValidator;
-            _episodeRepository = episodeRepository;
+            _episodeDataService = episodeDataService;
+            _episodeHistoryConverter = episodeHistoryConverter;
         }
 
         public GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto)
@@ -42,14 +41,14 @@ namespace SchwammyStreams.Backend.Orchestrators
             // steps
             // get the data for the shows
 
-
-            var history = _episodeRepository.All().ToList();
+            //TODO: add search criteria to dto. Then implement Data Service to call repo.
+            var history = _episodeDataService.GetEpisodes(getHistoryDto);
 
             // this needs to move out.
 
             foreach (var episode in history)
             {
-                results.Results.Add(new ShowHistoryDto { Id = episode.Id, Title = episode.Title, Details = episode.Details });
+                results.Results.Add(_episodeHistoryConverter.ToDto(episode));
             };
 
             // convert the data to dtos

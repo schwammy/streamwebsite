@@ -30,7 +30,7 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             // Set Up DbContext the .NET Core way - for DI
 
 
-            var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1 });
+            var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
             return View();
         }

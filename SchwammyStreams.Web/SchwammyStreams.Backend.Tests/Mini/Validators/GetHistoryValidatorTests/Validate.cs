@@ -83,5 +83,27 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
 
         }
 
+        [Fact]
+        public void IfSearchCriteriaIsNullReturnAMessage()
+        {
+            GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
+            GetHistoryDto dto = new GetHistoryDto();
+            var results = sut.Validate(dto);
+
+            Assert.Contains("Search Criteria cannot be null.", results);
+        }
+
+        [Fact]
+        public void IfSearchCriteriaIsNotNullReturnNoMessage()
+        {
+            GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
+            GetHistoryDto dto = new GetHistoryDto();
+            dto.SearchCriteria = "foo";
+
+            var results = sut.Validate(dto);
+
+            Assert.DoesNotContain("Search Criteria cannot be null.", results);
+        }
+
     }
 }

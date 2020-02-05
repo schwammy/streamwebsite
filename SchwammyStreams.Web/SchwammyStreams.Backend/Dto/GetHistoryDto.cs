@@ -8,6 +8,7 @@ namespace SchwammyStreams.Backend.Dto
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
+        public string SearchCriteria { get; set; }
 
     }
 }

@@ -29,6 +29,12 @@ namespace SchwammyStreams.Backend.Mini.Validators
             {
                 validationMessages.Add("Page size must be 100 or less.");
             }
+
+            if (dto.SearchCriteria is null)
+            {
+                validationMessages.Add("Search Criteria cannot be null.");
+
+            }
             return validationMessages;
         }
     }
