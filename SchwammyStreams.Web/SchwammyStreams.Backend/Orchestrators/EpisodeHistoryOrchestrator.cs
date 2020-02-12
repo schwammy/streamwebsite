@@ -26,6 +26,9 @@ namespace SchwammyStreams.Backend.Orchestrators
 
         public GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto)
         {
+            
+
+
             // of course, result object can and will be made generic
             GetEpisodeHistoryResult results = new GetEpisodeHistoryResult();
             //todo: Implement paging too.
@@ -53,7 +56,7 @@ namespace SchwammyStreams.Backend.Orchestrators
 
             // convert the data to dtos
             // return the data
-
+            results.Success = true;
             return results;
         }
     }

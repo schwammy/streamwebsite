@@ -11,6 +11,7 @@ namespace SchwammyStreams.Backend.Results
         {
             Results = new List<ShowHistoryDto>();
             Messages = new List<string>();
+            Success = false;
         }
         public bool Success { get; set; }
         public List<ShowHistoryDto> Results { get; set; }
