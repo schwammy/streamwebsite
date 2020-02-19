@@ -25,6 +25,7 @@ namespace SchwammyStreams.Web.AspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews();
 
             services.AddDbContext<SchwammyStreamsDbContext>(
@@ -45,7 +46,7 @@ namespace SchwammyStreams.Web.AspNet
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseBrowserLink();
+                app.UseBrowserLink();
             }
             else
             {
