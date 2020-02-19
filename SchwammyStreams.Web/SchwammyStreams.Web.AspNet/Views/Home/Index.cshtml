@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<SchwammyStreams.Backend.Dto.ShowHistoryDto>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -40,7 +41,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <img src="~/img/yt_icon_rgb.png" style="max-height: 75px; max-width:75px;"  class="card-img" alt="YouTube Logo">
+                    <img src="~/img/yt_icon_rgb.png" style="max-height: 75px; max-width:75px;" class="card-img" alt="YouTube Logo">
                     <div class="card-body">
                         <h5 class="card-title">On YouTube.com</h5>
                         <p class="card-text"><a href="youtube.com/schwammystreams">SchwammyStreams</a></p>
@@ -52,5 +53,36 @@
     </div>
     <div class="col-md-4">
         <h2>Check out the Archives!</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Details)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Details)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

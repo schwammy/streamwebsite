@@ -40,7 +40,6 @@ namespace SchwammyStreams.Backend.Orchestrators
                 return results;
             }
 
-
             // steps
             // get the data for the shows
 

@@ -32,7 +32,7 @@ namespace SchwammyStreams.Web.AspNet.Controllers
 
             var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
-            return View();
+            return View(history.Results);
         }
 
         public IActionResult Privacy()

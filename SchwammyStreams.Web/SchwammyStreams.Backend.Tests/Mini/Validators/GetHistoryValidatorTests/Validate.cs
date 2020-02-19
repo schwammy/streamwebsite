@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using FluentAssertions;
 
 namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
 {
@@ -21,7 +22,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
             dto.PageNumber = 5;
             var results = sut.Validate(dto);
 
-            Assert.DoesNotContain("Page number must be greater than 0.", results);
+            results.Should().NotContain("Page number must be greater than 0.");
         }
 
         [Fact]
@@ -44,8 +45,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
             dto.PageSize = 0;
             var results = sut.Validate(dto);
 
-            Assert.Contains("Page size must be greater than 0.", results);
-
+            results.Should().Contain("Page size must be greater than 0.");
         }
 
         [Fact]
