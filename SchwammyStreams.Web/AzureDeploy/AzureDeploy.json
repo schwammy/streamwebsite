@@ -39,7 +39,7 @@
     {
       "type": "Microsoft.Sql/servers/databases",
       "apiVersion": "2019-06-01-preview",
-      "name": "[concat(parameters('sqlservername'), '/', parameters('sqldatabasename')]",
+      "name": "[concat(parameters('sqlservername'), '/', parameters('sqldatabasename'))]",
       "location": "eastus",
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
