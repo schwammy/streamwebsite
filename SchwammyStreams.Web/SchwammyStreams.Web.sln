@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchwammyStreams.Backend", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchwammyStreams.Backend.Tests", "SchwammyStreams.Backend.Tests\SchwammyStreams.Backend.Tests.csproj", "{03917B83-DA10-4264-A30A-19A94E046CE3}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SchwammyStreams.Db", "SchwammyStreams.Db\SchwammyStreams.Db.sqlproj", "{60BA353F-29A4-4059-8F70-A0B198AD50CB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +33,6 @@ Global
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60BA353F-29A4-4059-8F70-A0B198AD50CB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
