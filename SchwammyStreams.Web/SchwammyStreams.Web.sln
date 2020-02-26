@@ -11,6 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchwammyStreams.Backend", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchwammyStreams.Backend.Tests", "SchwammyStreams.Backend.Tests\SchwammyStreams.Backend.Tests.csproj", "{03917B83-DA10-4264-A30A-19A94E046CE3}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SchwammyStreams.Db", "SchwammyStreams.Db\SchwammyStreams.Db.sqlproj", "{31F75890-E464-4CEE-B630-2175B94F8908}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDeploy", "AzureDeploy", "{C6702E1D-2BBF-4FFE-9A9F-E3526000E82F}"
+	ProjectSection(SolutionItems) = preProject
+		AzureDeploy\AzureDeploy.json = AzureDeploy\AzureDeploy.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +40,12 @@ Global
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03917B83-DA10-4264-A30A-19A94E046CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F75890-E464-4CEE-B630-2175B94F8908}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
