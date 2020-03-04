@@ -39,6 +39,8 @@ namespace SchwammyStreams.Web.AspNet
             services.AddTransient<IEpisodeRepository, EpisodeRepository>();
             services.AddTransient<IEpisodeHistoryConverter, EpisodeHistoryConverter>();
             services.AddTransient<IEpisodeDataService, EpisodeDataService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IAddEpisodeDtoValidator, AddEpisodeDtoValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

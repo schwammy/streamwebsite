@@ -9,6 +9,7 @@ namespace SchwammyStreams.Backend.Mini.Repositories
     public interface IEpisodeRepository
     {
         IQueryable<Episode> All();
+        void Add(Episode episode);
     }
 
     public class EpisodeRepository : IEpisodeRepository
@@ -23,6 +24,11 @@ namespace SchwammyStreams.Backend.Mini.Repositories
         public IQueryable<Episode> All()
         {
             return _schwammyStreamsDbContext.Episodes;
+        }
+
+        public void Add(Episode episode)
+        {
+            _schwammyStreamsDbContext.Episodes.Add(episode);
         }
     }
 }

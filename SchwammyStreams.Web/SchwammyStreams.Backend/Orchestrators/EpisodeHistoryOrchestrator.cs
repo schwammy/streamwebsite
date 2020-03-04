@@ -2,14 +2,18 @@
 using SchwammyStreams.Backend.Mini.Converters;
 using SchwammyStreams.Backend.Mini.DataServices;
 using SchwammyStreams.Backend.Mini.Validators;
+using SchwammyStreams.Backend.Model;
 using SchwammyStreams.Backend.Results;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SchwammyStreams.Backend.Orchestrators
 {
     public interface IEpisodeHistoryOrchestrator
     {
         GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto);
+        Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode);
     }
 
     public class EpisodeHistoryOrchestrator : IEpisodeHistoryOrchestrator
@@ -17,11 +21,44 @@ namespace SchwammyStreams.Backend.Orchestrators
         private readonly IGetHistoryDtoValidator _getHistoryDtoValidator;
         private readonly IEpisodeDataService _episodeDataService;
         private readonly IEpisodeHistoryConverter _episodeHistoryConverter;
-        public EpisodeHistoryOrchestrator(IGetHistoryDtoValidator getHistoryDtoValidator, IEpisodeDataService episodeDataService, IEpisodeHistoryConverter episodeHistoryConverter)
+        private readonly IAddEpisodeDtoValidator _addEpisodeDtoValidator;
+        private readonly IUnitOfWork _unitOfWork;
+        public EpisodeHistoryOrchestrator(IGetHistoryDtoValidator getHistoryDtoValidator, 
+            IEpisodeDataService episodeDataService, 
+            IEpisodeHistoryConverter episodeHistoryConverter,
+            IAddEpisodeDtoValidator addEpisodeDtoValidator,
+            IUnitOfWork unitOfWork
+            )
         {
             _getHistoryDtoValidator = getHistoryDtoValidator;
             _episodeDataService = episodeDataService;
             _episodeHistoryConverter = episodeHistoryConverter;
+            _addEpisodeDtoValidator = addEpisodeDtoValidator;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode)
+        {
+            PersistResult<AddEpisodeDto> result = new PersistResult<AddEpisodeDto>();
+            //validate
+            var messages = _addEpisodeDtoValidator.Validate(episode);
+            if (messages.Any())
+            {
+                result.Messages.AddRange(messages);
+                result.Success = false;
+                return result;
+            }
+
+            //convert it
+            var entity = _episodeHistoryConverter.ToDomain(episode);
+
+            // add it
+            _episodeDataService.AddEpisode(entity);
+
+            // commit it
+            await _unitOfWork.SaveAllAsync(new CancellationToken());
+
+            return result;
         }
 
         public GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto)

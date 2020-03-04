@@ -21,7 +21,7 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             _episodeHistoryOrchestrator = episodeHistoryOrchestrator;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             // Get list of old shows to display
             // ...
@@ -29,6 +29,9 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             // Use Unit Of Work Pattern
             // Set Up DbContext the .NET Core way - for DI
 
+            AddEpisodeDto dto = new AddEpisodeDto();
+            dto.Title = "First One";
+            await _episodeHistoryOrchestrator.AddEpisodeAsync(dto);
 
             var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 

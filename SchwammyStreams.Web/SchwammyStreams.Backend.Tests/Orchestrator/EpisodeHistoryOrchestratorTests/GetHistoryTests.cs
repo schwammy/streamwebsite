@@ -18,16 +18,19 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
         Mock<IGetHistoryDtoValidator> _getHistoryDtoValidator = new Mock<IGetHistoryDtoValidator>();
         Mock<IEpisodeDataService> _episodeDataService = new Mock<IEpisodeDataService>();
         Mock<IEpisodeHistoryConverter> _episodeHistoryConverter = new Mock<IEpisodeHistoryConverter>();
+        Mock<IAddEpisodeDtoValidator> _addEpisodeDtoValidator = new Mock<IAddEpisodeDtoValidator>();
+        Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         EpisodeHistoryOrchestrator _sut;
 
         public GetHistoryTests()
         {
-
             _sut = new EpisodeHistoryOrchestrator(
                 _getHistoryDtoValidator.Object,
                 _episodeDataService.Object,
-                _episodeHistoryConverter.Object);
-
+                _episodeHistoryConverter.Object,
+                _addEpisodeDtoValidator.Object,
+                _unitOfWork.Object
+                );
         }
         /*
              * what do we want to test
@@ -45,46 +48,28 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
         [Fact]
         public void CallsGetHistoryDtoValidatorOnce() //WhenCheckingHistory_ThenCallsGetHistoryValidator
         {
-            Mock<IGetHistoryDtoValidator> getHistoryDtoValidator = new Mock<IGetHistoryDtoValidator>();
-            Mock<IEpisodeDataService> episodeDataService = new Mock<IEpisodeDataService>();
-            Mock<IEpisodeHistoryConverter> episodeHistoryConverter = new Mock<IEpisodeHistoryConverter>();
-
-            EpisodeHistoryOrchestrator sut = new EpisodeHistoryOrchestrator(
-                getHistoryDtoValidator.Object,
-                episodeDataService.Object,
-                episodeHistoryConverter.Object);
-
-
-            getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(new List<string>());
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(new List<string>());
 
 
             var dto = new GetHistoryDto();
 
-            sut.GetHistory(dto);
+            _sut.GetHistory(dto);
 
-            getHistoryDtoValidator.Verify(v => v.Validate(dto), Times.Once);
-            getHistoryDtoValidator.Verify(v => v.Validate(It.IsAny<GetHistoryDto>()),Times.Once);
+            _getHistoryDtoValidator.Verify(v => v.Validate(dto), Times.Once);
+            _getHistoryDtoValidator.Verify(v => v.Validate(It.IsAny<GetHistoryDto>()),Times.Once);
         }
 
         [Fact]
         public void ReturnsSuccessEqualsFalseWhenValidationFails() //WhenCheckingHistory_ThenCallsGetHistoryValidator
         {
-            Mock<IGetHistoryDtoValidator> getHistoryDtoValidator = new Mock<IGetHistoryDtoValidator>();
-            Mock<IEpisodeDataService> episodeDataService = new Mock<IEpisodeDataService>();
-            Mock<IEpisodeHistoryConverter> episodeHistoryConverter = new Mock<IEpisodeHistoryConverter>();
-
-            EpisodeHistoryOrchestrator sut = new EpisodeHistoryOrchestrator(
-                getHistoryDtoValidator.Object,
-                episodeDataService.Object,
-                episodeHistoryConverter.Object);
 
             var messages = new List<string>();
             messages.Add("FailedValidation");
-            getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
 
             var dto = new GetHistoryDto();
 
-            var result = sut.GetHistory(dto);
+            var result = _sut.GetHistory(dto);
 
             Assert.False(result.Success);
         }
@@ -115,23 +100,14 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
         [Fact]
         public void ReturnsValidationMessagesIfAny() 
         {
-            Mock<IGetHistoryDtoValidator> getHistoryDtoValidator = new Mock<IGetHistoryDtoValidator>();
-            Mock<IEpisodeDataService> episodeDataService = new Mock<IEpisodeDataService>();
-            Mock<IEpisodeHistoryConverter> episodeHistoryConverter = new Mock<IEpisodeHistoryConverter>();
-
-            EpisodeHistoryOrchestrator sut = new EpisodeHistoryOrchestrator(
-                getHistoryDtoValidator.Object,
-                episodeDataService.Object,
-                episodeHistoryConverter.Object);
-
             var messages = new List<string>();
             messages.Add("FailedValidation");
 
-            getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
 
             var dto = new GetHistoryDto();
 
-            var result = sut.GetHistory(dto);
+            var result = _sut.GetHistory(dto);
 
             Assert.Contains("FailedValidation", result.Messages);
         }
@@ -139,22 +115,13 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
         [Fact]
         public void ReturnsNoValidationMessagesWhenNoneExist()
         {
-            Mock<IGetHistoryDtoValidator> getHistoryDtoValidator = new Mock<IGetHistoryDtoValidator>();
-            Mock<IEpisodeDataService> episodeDataService = new Mock<IEpisodeDataService>();
-            Mock<IEpisodeHistoryConverter> episodeHistoryConverter = new Mock<IEpisodeHistoryConverter>();
-
-            EpisodeHistoryOrchestrator sut = new EpisodeHistoryOrchestrator(
-                getHistoryDtoValidator.Object,
-                episodeDataService.Object,
-                episodeHistoryConverter.Object);
-
             var messages = new List<string>();
 
-            getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
 
             var dto = new GetHistoryDto();
 
-            var result = sut.GetHistory(dto);
+            var result = _sut.GetHistory(dto);
 
             Assert.Empty(result.Messages);
         }

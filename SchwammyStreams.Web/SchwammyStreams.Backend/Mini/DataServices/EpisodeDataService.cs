@@ -9,6 +9,7 @@ namespace SchwammyStreams.Backend.Mini.DataServices
     public interface IEpisodeDataService
     {
         IQueryable<Episode> GetEpisodes(GetHistoryDto parameters);
+        void AddEpisode(Episode episode);
     }
 
     public class EpisodeDataService : IEpisodeDataService
@@ -28,6 +29,11 @@ namespace SchwammyStreams.Backend.Mini.DataServices
                 result = result.Where(e => e.Title.Contains(parameters.SearchCriteria, StringComparison.OrdinalIgnoreCase));
             }
             return result;
+        }
+
+        public void AddEpisode(Episode episode)
+        {
+            _episodeRepository.Add(episode);
         }
     }
 }
