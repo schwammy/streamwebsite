@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SchwammyStreams.Backend.Dto;
@@ -29,15 +30,16 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             // Use Unit Of Work Pattern
             // Set Up DbContext the .NET Core way - for DI
 
-            AddEpisodeDto dto = new AddEpisodeDto();
-            dto.Title = "First One";
-            await _episodeHistoryOrchestrator.AddEpisodeAsync(dto);
+            //AddEpisodeDto dto = new AddEpisodeDto();
+            //dto.Title = "First One";
+            //await _episodeHistoryOrchestrator.AddEpisodeAsync(dto);
 
             var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
             return View(history.Results);
         }
 
+        [Authorize(Roles = "6136e87e-bbb7-46b2-a13f-71df9ac7e5bb")]
         public IActionResult Privacy()
         {
             return View();
