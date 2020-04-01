@@ -14,6 +14,8 @@ namespace SchwammyStreams.Backend.Orchestrators
     {
         GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto);
         Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode);
+
+        Task<SelectResult<EpisodeDetailDto>> GetEpisodeDetailAsync(int id);
     }
 
     public class EpisodeHistoryOrchestrator : IEpisodeHistoryOrchestrator
@@ -37,6 +39,17 @@ namespace SchwammyStreams.Backend.Orchestrators
             _unitOfWork = unitOfWork;
         }
 
+
+        public async Task<SelectResult<EpisodeDetailDto>> GetEpisodeDetailAsync(int id)
+        {
+            SelectResult<EpisodeDetailDto> result = new SelectResult<EpisodeDetailDto>();
+
+            var item = await _episodeDataService.GetEpisodeAsync(id);
+
+            result.Item = _episodeHistoryConverter.ToDetailDto(item);
+
+            return result;
+        }
         public async Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode)
         {
             PersistResult<AddEpisodeDto> result = new PersistResult<AddEpisodeDto>();

@@ -18,11 +18,15 @@ namespace SchwammyStreams.Backend.Results
         public List<string> Messages { get; set; }
     }
 
-    public class SelectResult<T> : Result
+    public class SelectListResult<T> : Result
     {
         public List<T> Results { get; set; }
     }
 
+    public class SelectResult<T> : Result
+    {
+        public T Item { get; set; }
+    }
     public class PersistResult<T> : Result
     {
         public T Item { get; set; }

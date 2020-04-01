@@ -7,6 +7,7 @@ namespace SchwammyStreams.Backend.Mini.Converters
     {
         ShowHistoryDto ToDto(Episode episode);
         Episode ToDomain(AddEpisodeDto dto);
+        EpisodeDetailDto ToDetailDto(Episode episode);
     }
 
     public class EpisodeHistoryConverter : IEpisodeHistoryConverter
@@ -29,6 +30,17 @@ namespace SchwammyStreams.Backend.Mini.Converters
             episode.Details = dto.Description;
 
             return episode;
+        }
+
+        public EpisodeDetailDto ToDetailDto(Episode episode)
+        {
+            EpisodeDetailDto dto = new EpisodeDetailDto();
+
+            dto.Id = episode.Id;
+            dto.Title = episode.Title;
+            dto.Details = episode.Details;
+
+            return dto;
         }
     }
 }

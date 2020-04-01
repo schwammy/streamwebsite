@@ -23,13 +23,16 @@ namespace SchwammyStreams.Web.AspNet.Views.Home
         // GET: EpisodeHistory
         public ActionResult Index()
         {
-            return View();
+            var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
+
+            return View(history.Results);
         }
 
         // GET: EpisodeHistory/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var item = await _episodeHistoryOrchestrator.GetEpisodeDetailAsync(id);
+            return View(item.Item);
         }
 
         // GET: EpisodeHistory/Create
