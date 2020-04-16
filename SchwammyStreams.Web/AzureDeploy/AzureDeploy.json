@@ -2,79 +2,252 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "environment": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
     "sqlservername": {
-      "type": "String"
+      "type": "string"
     },
     "sqldatabasename": {
-      "type": "String"
+      "type": "string"
     },
     "adminuser": {
-      "type": "String"
+      "type": "string"
     },
     "adminpassword": {
-      "type": "String"
+      "type": "string"
     },
-    "sqlservername": {
-      "type": "String"
+    "insightsName": {
+      "type": "string"
+    },
+    "appServicePlanName": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "apiSiteName": {
+      "type": "string"
+    },
+    "aspSiteName": {
+      "type": "string"
     }
   },
   "variables": {},
   "resources": [
     {
-      "type": "Microsoft.Sql/servers",
-      "apiVersion": "2019-06-01-preview",
-      "name": "[parameters('sqlservername')]",
-      "location": "eastus",
+      "type": "microsoft.insights/components",
+      "apiVersion": "2015-05-01",
+      "name": "[parameters('insightsName')]",
+      "location": "centralus",
       "tags": {
-        "environment": "systest",
-        "owner": "stream"
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
       },
-      "kind": "v12.0",
+      "kind": "web",
       "properties": {
-        "administratorLogin": "[parameters('adminuser')]",
-        "administratorLoginPassword": "[parameters('adminpassword')]",
-        "version": "12.0"
+        "Application_Type": "web",
+        "Request_Source": "IbizaWebAppExtensionCreate"
       }
     },
     {
-      "type": "Microsoft.Sql/servers/databases",
-      "apiVersion": "2019-06-01-preview",
-      "name": "[concat(parameters('sqlservername'), '/', parameters('sqldatabasename'))]",
-      "location": "eastus",
-      "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
-      ],
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-02-01",
+      "name": "[parameters('appServicePlanName')]",
+      "location": "Central US",
       "tags": {
-        "environment": "systest",
-        "owner": "stream"
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
       },
       "sku": {
-        "name": "Basic",
-        "tier": "Basic",
-        "capacity": 5
+        "name": "[parameters('sku')]"
       },
-      "kind": "v12.0,user",
+      "kind": "app",
       "properties": {
-        "collation": "SQL_Latin1_General_CP1_CI_AS",
-        "maxSizeBytes": 2147483648,
-        "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
-        "zoneRedundant": false,
-        "readScale": "Disabled",
-        "readReplicaCount": 0,
-        "storageAccountType": "GRS"
+        "perSiteScaling": false,
+        "maximumElasticWorkerCount": 1,
+        "isSpot": false,
+        "reserved": false,
+        "isXenon": false,
+        "hyperV": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
       }
     },
     {
-      "type": "Microsoft.Sql/servers/firewallRules",
-      "apiVersion": "2015-05-01-preview",
-      "name": "[concat(parameters('sqlservername'), '/AllowAllWindowsAzureIps')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('apiSiteName')]",
+      "location": "Central US",
       "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
+        "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      ],
+      "tags": {
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
+      },
+      "kind": "app",
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('apiSiteName'), '.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('apiSiteName'), '.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('aspSiteName')]",
+      "location": "Central US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      ],
+      "tags": {
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
+      },
+      "kind": "app",
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('apiSiteName'), '.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('apiSiteName'), '.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2018-11-01",
+      "name": "[concat(parameters('apiSiteName'), '/web')]",
+      "location": "Central US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('apiSiteName'))]"
       ],
       "properties": {
-        "startIpAddress": "0.0.0.0",
-        "endIpAddress": "0.0.0.0"
+      },
+      "tags": {
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
       }
-    }
+      },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2018-11-01",
+      "name": "[concat(parameters('aspSiteName'), '/web')]",
+      "location": "Central US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('aspSiteName'))]"
+      ],
+      "tags": {
+        "environment": "[parameters('environment')]",
+        "owner": "[parameters('owner')]"
+      },
+      "properties": {
+      }
+    },
+      {
+        "type": "Microsoft.Web/sites/hostNameBindings",
+        "apiVersion": "2018-11-01",
+        "name": "[concat(parameters('apiSiteName'), '/', parameters('apiSiteName'), '.azurewebsites.net')]",
+        "location": "Central US",
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/sites', parameters('apiSiteName'))]"
+        ],
+        "properties": {
+          "siteName": "apiSiteName",
+          "hostNameType": "Verified"
+        }
+      },
+      {
+        "type": "Microsoft.Web/sites/hostNameBindings",
+        "apiVersion": "2018-11-01",
+        "name": "[concat(parameters('aspSiteName'), '/', parameters('aspSiteName'), '.azurewebsites.net')]",
+        "location": "Central US",
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/sites', parameters('aspSiteName'))]"
+        ],
+        "properties": {
+          "siteName": "apiSiteName",
+          "hostNameType": "Verified"
+        }
+      },
+      {
+        "type": "Microsoft.Sql/servers",
+        "apiVersion": "2019-06-01-preview",
+        "name": "[parameters('sqlservername')]",
+        "location": "eastus",
+        "tags": {
+          "environment": "[parameters('environment')]",
+          "owner": "[parameters('owner')]"
+        },
+        "kind": "v12.0",
+        "properties": {
+          "administratorLogin": "[parameters('adminuser')]",
+          "administratorLoginPassword": "[parameters('adminpassword')]",
+          "version": "12.0"
+        }
+      },
+      {
+        "type": "Microsoft.Sql/servers/databases",
+        "apiVersion": "2019-06-01-preview",
+        "name": "[concat(parameters('sqlservername'), '/', parameters('sqldatabasename'))]",
+        "location": "eastus",
+        "dependsOn": [
+          "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
+        ],
+        "tags": {
+          "environment": "[parameters('environment')]",
+          "owner": "[parameters('owner')]"
+        },
+        "sku": {
+          "name": "Basic",
+          "tier": "Basic",
+          "capacity": 5
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 2147483648,
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "readReplicaCount": 0,
+          "storageAccountType": "GRS"
+        }
+      },
+      {
+        "type": "Microsoft.Sql/servers/firewallRules",
+        "apiVersion": "2015-05-01-preview",
+        "name": "[concat(parameters('sqlservername'), '/AllowAllWindowsAzureIps')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
+        ],
+        "properties": {
+          "startIpAddress": "0.0.0.0",
+          "endIpAddress": "0.0.0.0"
+        }
+      }
   ]
 }
