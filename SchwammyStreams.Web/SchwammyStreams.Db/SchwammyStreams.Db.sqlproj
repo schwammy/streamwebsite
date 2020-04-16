@@ -60,4 +60,7 @@
   <ItemGroup>
     <Build Include="Episodes.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SchwammyStreams.Db.publish.xml" />
+  </ItemGroup>
 </Project>
