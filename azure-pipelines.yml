@@ -18,6 +18,10 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
 - task: Cache@2
   inputs:
     key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**'
@@ -26,6 +30,7 @@ steps:
     path: $(NUGET_PACKAGES)
   displayName: Cache NuGet packages
 
+    
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
