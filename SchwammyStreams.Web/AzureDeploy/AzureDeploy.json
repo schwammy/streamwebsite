@@ -20,9 +20,6 @@
     "adminpassword": {
       "type": "string"
     },
-    "insightsName": {
-      "type": "string"
-    },
     "appServicePlanName": {
       "type": "string"
     },
@@ -38,21 +35,6 @@
   },
   "variables": {},
   "resources": [
-    {
-      "type": "microsoft.insights/components",
-      "apiVersion": "2015-05-01",
-      "name": "[parameters('insightsName')]",
-      "location": "centralus",
-      "tags": {
-        "environment": "[parameters('environment')]",
-        "owner": "[parameters('owner')]"
-      },
-      "kind": "web",
-      "properties": {
-        "Application_Type": "web",
-        "Request_Source": "IbizaWebAppExtensionCreate"
-      }
-    },
     {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2018-02-01",
