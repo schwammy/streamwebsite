@@ -21,9 +21,9 @@ namespace SchwammyStreams.Web.AspNet.Views.Home
         }
 
         // GET: EpisodeHistory
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var history = _episodeHistoryOrchestrator.GetHistory(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
+            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
             return View(history.Results);
         }

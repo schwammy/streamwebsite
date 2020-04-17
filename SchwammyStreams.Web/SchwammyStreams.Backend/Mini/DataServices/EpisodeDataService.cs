@@ -29,7 +29,7 @@ namespace SchwammyStreams.Backend.Mini.DataServices
         {
             var result = _episodeRepository.All();
             if (!string.IsNullOrWhiteSpace(parameters.SearchCriteria))
-                {
+            {
                 result = result.Where(e => e.Title.Contains(parameters.SearchCriteria, StringComparison.OrdinalIgnoreCase));
             }
             return result;

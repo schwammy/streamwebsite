@@ -1,4 +1,5 @@
-﻿using SchwammyStreams.Backend.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using SchwammyStreams.Backend.Dto;
 using SchwammyStreams.Backend.Mini.Converters;
 using SchwammyStreams.Backend.Mini.DataServices;
 using SchwammyStreams.Backend.Mini.Validators;
@@ -12,7 +13,7 @@ namespace SchwammyStreams.Backend.Orchestrators
 {
     public interface IEpisodeHistoryOrchestrator
     {
-        GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto);
+        Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryDto getHistoryDto);
         Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode);
 
         Task<SelectResult<EpisodeDetailDto>> GetEpisodeDetailAsync(int id);
@@ -74,7 +75,7 @@ namespace SchwammyStreams.Backend.Orchestrators
             return result;
         }
 
-        public GetEpisodeHistoryResult GetHistory(GetHistoryDto getHistoryDto)
+        public async Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryDto getHistoryDto)
         {
             
 
@@ -98,7 +99,7 @@ namespace SchwammyStreams.Backend.Orchestrators
 
             // this needs to move out.
 
-            foreach (var episode in history)
+            foreach (var episode in await history.ToListAsync())
             {
                 results.Results.Add(_episodeHistoryConverter.ToDto(episode));
             };
