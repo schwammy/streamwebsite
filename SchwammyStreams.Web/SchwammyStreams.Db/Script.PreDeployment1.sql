@@ -10,8 +10,8 @@
 --------------------------------------------------------------------------------------
 */
 
-if (exists(select * from sys.tables where name = 'episodes'))
-begin
-update episodes set details = 'legacy' where details is null;
-update episodes set title = 'legacy' where title is null;
-end
+--if (exists(select * from sys.tables where name = 'episodes'))
+--begin
+--update episodes set details = 'legacy' where details is null;
+--update episodes set title = 'legacy' where title is null;
+--end
