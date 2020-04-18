@@ -90,6 +90,9 @@
         "owner": "[parameters('owner')]"
       },
       "kind": "app",
+      "identity": {
+        "type": "SystemAssigned"
+      },
       "properties": {
         "enabled": true,
         "hostNameSslStates": [
@@ -120,6 +123,9 @@
         "owner": "[parameters('owner')]"
       },
       "kind": "app",
+      "identity": {
+        "type": "SystemAssigned"
+      },
       "properties": {
         "enabled": true,
         "hostNameSslStates": [

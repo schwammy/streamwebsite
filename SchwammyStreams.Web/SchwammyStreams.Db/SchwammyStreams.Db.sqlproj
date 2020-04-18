@@ -63,4 +63,7 @@
   <ItemGroup>
     <None Include="SchwammyStreams.Db.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
 </Project>
