@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SchwammyStreams.Db.publish.xml" />
+    <None Include="AzurePipeline.Db.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />

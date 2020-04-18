@@ -53,7 +53,13 @@ steps:
     SourceFolder: '$(build.sourcesdirectory)'
     Contents: '**/azuredeploy.json'
     TargetFolder: '$(build.artifactstagingdirectory)'
-    
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '**/AzurePipeline.Db.publish.xml'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
