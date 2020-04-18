@@ -10,11 +10,12 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-
-if not exists(select * from sys.database_principals where name = '[schwammystreamsweb-svc-systest]')
+/* This will only create the user on azure*/
+if ((not exists(select * from sys.databases where name = 'SchwammyStreams')) AND (not exists(select * from sys.database_principals where name = '[schwammystreamsweb-svc-systest]')))
 BEGIN
 
-create user [schwammystreamsweb-svc-systest] from external provider;
+/* using a string because external provider is not valid syntax on local database */
+EXEC ('create user [schwammystreamsweb-svc-systest] from external provider;')
 
 ALTER ROLE db_datareader
   ADD MEMBER [schwammystreamsweb-svc-systest] 
