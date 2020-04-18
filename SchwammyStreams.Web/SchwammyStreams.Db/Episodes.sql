@@ -4,5 +4,5 @@
     [Details] VARCHAR(MAX) NOT NULL, 
     [Tags] VARCHAR(255) NULL, 
     [ArchiveUrl] VARCHAR(255) NULL, 
-    [AirDate] DATETIME NOT NULL
+    [OriginalAirDate] DATETIME NOT NULL DEFAULT GetDate()
 );
