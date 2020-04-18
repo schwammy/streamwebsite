@@ -1,5 +1,8 @@
 ﻿CREATE TABLE [dbo].[Episodes] (
     [Id]      INT            IDENTITY (1, 1) NOT NULL,
-    [Title]   NVARCHAR (50)  NULL,
-    [Details] NVARCHAR (MAX) NULL
+    [Title]   VARCHAR(50)  NOT NULL,
+    [Details] VARCHAR(MAX) NOT NULL, 
+    [Tags] VARCHAR(255) NULL, 
+    [ArchiveUrl] VARCHAR(255) NULL, 
+    [AirDate] DATETIME NOT NULL
 );
