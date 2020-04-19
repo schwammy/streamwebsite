@@ -39,8 +39,6 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             return View(history.Results);
         }
 
-        //[Authorize(Roles = "6136e87e-bbb7-46b2-a13f-71df9ac7e5bb")]
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();
@@ -50,6 +48,12 @@ namespace SchwammyStreams.Web.AspNet.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult Login()
+        {
+            return View();
         }
     }
 }
