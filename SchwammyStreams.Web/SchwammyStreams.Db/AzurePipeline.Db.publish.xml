@@ -8,6 +8,6 @@
     </TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
-    <BackupDatabaseBeforeChanges>True</BackupDatabaseBeforeChanges>
+    <BackupDatabaseBeforeChanges>False</BackupDatabaseBeforeChanges>
   </PropertyGroup>
 </Project>
