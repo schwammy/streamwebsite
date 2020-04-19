@@ -9,12 +9,12 @@ namespace SchwammyStreams.Backend.Results
     {
         public GetEpisodeHistoryResult()
         {
-            Results = new List<ShowHistoryDto>();
+            Results = new List<EpisodeListItemDto>();
             Messages = new List<string>();
             Success = false;
         }
         public bool Success { get; set; }
-        public List<ShowHistoryDto> Results { get; set; }
+        public List<EpisodeListItemDto> Results { get; set; }
         public List<string> Messages { get; set; }
     }
 }

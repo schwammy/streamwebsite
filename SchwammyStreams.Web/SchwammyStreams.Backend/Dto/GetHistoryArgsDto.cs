@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SchwammyStreams.Backend.Dto
 {
-    public class GetHistoryDto
+    public class GetHistoryArgsDto
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }

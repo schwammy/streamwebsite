@@ -5,16 +5,16 @@ namespace SchwammyStreams.Backend.Mini.Converters
 {
     public interface IEpisodeHistoryConverter
     {
-        ShowHistoryDto ToDto(Episode episode);
+        EpisodeListItemDto ToDto(Episode episode);
         Episode ToDomain(AddEpisodeDto dto);
         EpisodeDetailDto ToDetailDto(Episode episode);
     }
 
     public class EpisodeHistoryConverter : IEpisodeHistoryConverter
     {
-        public ShowHistoryDto ToDto(Episode episode)
+        public EpisodeListItemDto ToDto(Episode episode)
         {
-            ShowHistoryDto dto = new ShowHistoryDto();
+            EpisodeListItemDto dto = new EpisodeListItemDto();
 
             dto.Id = episode.Id;
             dto.Title = episode.Title;

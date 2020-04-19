@@ -49,15 +49,15 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
         [Fact]
         public void CallsGetHistoryDtoValidatorOnce() //WhenCheckingHistory_ThenCallsGetHistoryValidator
         {
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(new List<string>());
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(new List<string>());
 
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             _sut.GetHistoryAsync(dto);
 
             _getHistoryDtoValidator.Verify(v => v.Validate(dto), Times.Once);
-            _getHistoryDtoValidator.Verify(v => v.Validate(It.IsAny<GetHistoryDto>()),Times.Once);
+            _getHistoryDtoValidator.Verify(v => v.Validate(It.IsAny<GetHistoryArgsDto>()),Times.Once);
         }
 
         [Fact]
@@ -66,9 +66,9 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
 
             var messages = new List<string>();
             messages.Add("FailedValidation");
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(messages);
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             var result = await _sut.GetHistoryAsync(dto);
 
@@ -104,9 +104,9 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
             var messages = new List<string>();
             messages.Add("FailedValidation");
 
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(messages);
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             var result = await _sut.GetHistoryAsync(dto);
 
@@ -134,9 +134,9 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
             var messages = new List<string>();
             messages.Add("FailedValidation");
 
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(messages);
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             var result = _sut.GetHistoryAsync(dto);
 
@@ -150,9 +150,9 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
             var messages = new List<string>();
             //messages.Add("FailedValidation");
 
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(messages);
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             var result = _sut.GetHistoryAsync(dto);
 
@@ -167,10 +167,10 @@ namespace SchwammyStreams.Backend.Tests.Orchestrator.EpisodeHistoryOrchestratorT
 
             var data = new List<Episode>();
             
-            _episodeDataService.Setup(ds => ds.GetEpisodes(It.IsAny<GetHistoryDto>())).Returns(data.AsQueryable());
-            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryDto>())).Returns(messages);
+            _episodeDataService.Setup(ds => ds.GetEpisodes(It.IsAny<GetHistoryArgsDto>())).Returns(data.AsQueryable());
+            _getHistoryDtoValidator.Setup(v => v.Validate(It.IsAny<GetHistoryArgsDto>())).Returns(messages);
 
-            var dto = new GetHistoryDto();
+            var dto = new GetHistoryArgsDto();
 
             var result = _sut.GetHistoryAsync(dto);
 

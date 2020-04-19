@@ -34,7 +34,7 @@ namespace SchwammyStreams.Web.AspNet.Controllers
             //dto.Title = "First One";
             //await _episodeHistoryOrchestrator.AddEpisodeAsync(dto);
 
-            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
+            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(new GetHistoryArgsDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
             return View(history.Results);
         }

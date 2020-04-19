@@ -15,7 +15,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Converters.EpisodeHistoryConverterT
             EpisodeHistoryConverter sut = new EpisodeHistoryConverter();
             Episode episode = new Episode();
             episode.Title = "something";
-            ShowHistoryDto dto = sut.ToDto(episode);
+            EpisodeListItemDto dto = sut.ToDto(episode);
 
             dto.Title.Should().Be(episode.Title);
         }
@@ -26,7 +26,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Converters.EpisodeHistoryConverterT
             EpisodeHistoryConverter sut = new EpisodeHistoryConverter();
             Episode episode = new Episode();
             episode.Details = "something else";
-            ShowHistoryDto dto = sut.ToDto(episode);
+            EpisodeListItemDto dto = sut.ToDto(episode);
 
             Assert.Equal(episode.Details, dto.Details);
         }
@@ -36,7 +36,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Converters.EpisodeHistoryConverterT
             EpisodeHistoryConverter sut = new EpisodeHistoryConverter();
             Episode episode = new Episode();
             episode.Id = 78438;
-            ShowHistoryDto dto = sut.ToDto(episode);
+            EpisodeListItemDto dto = sut.ToDto(episode);
 
             Assert.Equal(episode.Id, dto.Id);
         }

@@ -18,7 +18,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
             //assert
 
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageNumber = 5;
             var results = sut.Validate(dto);
 
@@ -29,7 +29,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void IfPageSizeGreaterThanZeroReturnsNoMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageSize = 55;
             var results = sut.Validate(dto);
 
@@ -41,7 +41,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void PageSizeZeroReturnsMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageSize = 0;
             var results = sut.Validate(dto);
 
@@ -52,7 +52,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void PageNumberZeroReturnsMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageNumber = 0;
             var results = sut.Validate(dto);
 
@@ -63,7 +63,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void IfPageSizeGreaterThan100ReturnsMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageSize = 101;
             var results = sut.Validate(dto);
 
@@ -75,7 +75,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void IfPageSize100ReturnsNoMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.PageSize = 100;
             var results = sut.Validate(dto);
 
@@ -87,7 +87,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void IfSearchCriteriaIsNullReturnAMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             var results = sut.Validate(dto);
 
             Assert.Contains("Search Criteria cannot be null.", results);
@@ -97,7 +97,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.GetHistoryValidatorTests
         public void IfSearchCriteriaIsNotNullReturnNoMessage()
         {
             GetHistoryDtoValidator sut = new GetHistoryDtoValidator();
-            GetHistoryDto dto = new GetHistoryDto();
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
             dto.SearchCriteria = "foo";
 
             var results = sut.Validate(dto);

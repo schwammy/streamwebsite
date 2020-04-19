@@ -24,7 +24,7 @@ namespace SchwammyStreams.Web.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(new GetHistoryDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
+            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(new GetHistoryArgsDto() { PageSize = 10, PageNumber = 1, SearchCriteria = string.Empty });
 
             return Ok(history.Results);
         }

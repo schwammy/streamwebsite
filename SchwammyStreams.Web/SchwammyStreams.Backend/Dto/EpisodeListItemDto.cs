@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SchwammyStreams.Backend.Dto
 {
-    public class ShowHistoryDto
+    public class EpisodeListItemDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -10,7 +10,7 @@ namespace SchwammyStreams.Backend.Mini.DataServices
 {
     public interface IEpisodeDataService
     {
-        IQueryable<Episode> GetEpisodes(GetHistoryDto parameters);
+        IQueryable<Episode> GetEpisodes(GetHistoryArgsDto parameters);
         void AddEpisode(Episode episode);
 
         Task<Episode> GetEpisodeAsync(int id);
@@ -25,7 +25,7 @@ namespace SchwammyStreams.Backend.Mini.DataServices
             _episodeRepository = episodeRepository;
         }
 
-        public IQueryable<Episode> GetEpisodes(GetHistoryDto parameters)
+        public IQueryable<Episode> GetEpisodes(GetHistoryArgsDto parameters)
         {
             var result = _episodeRepository.All();
             if (!string.IsNullOrWhiteSpace(parameters.SearchCriteria))

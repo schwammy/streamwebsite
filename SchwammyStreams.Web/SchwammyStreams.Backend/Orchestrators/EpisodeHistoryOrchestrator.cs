@@ -13,7 +13,7 @@ namespace SchwammyStreams.Backend.Orchestrators
 {
     public interface IEpisodeHistoryOrchestrator
     {
-        Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryDto getHistoryDto);
+        Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryArgsDto getHistoryDto);
         Task<PersistResult<AddEpisodeDto>> AddEpisodeAsync(AddEpisodeDto episode);
 
         Task<SelectResult<EpisodeDetailDto>> GetEpisodeDetailAsync(int id);
@@ -75,7 +75,7 @@ namespace SchwammyStreams.Backend.Orchestrators
             return result;
         }
 
-        public async Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryDto getHistoryDto)
+        public async Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryArgsDto getHistoryArgs)
         {
             
 
@@ -84,7 +84,7 @@ namespace SchwammyStreams.Backend.Orchestrators
             GetEpisodeHistoryResult results = new GetEpisodeHistoryResult();
             //todo: Implement paging too.
 
-            results.Messages = _getHistoryDtoValidator.Validate(getHistoryDto);
+            results.Messages = _getHistoryDtoValidator.Validate(getHistoryArgs);
             if (results.Messages.Any())
             {
                 results.Success = false;
@@ -95,7 +95,7 @@ namespace SchwammyStreams.Backend.Orchestrators
             // get the data for the shows
 
             //TODO: add search criteria to dto. Then implement Data Service to call repo.
-            var history = _episodeDataService.GetEpisodes(getHistoryDto);
+            var history = _episodeDataService.GetEpisodes(getHistoryArgs);
 
             // this needs to move out.
 
