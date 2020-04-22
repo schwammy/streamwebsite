@@ -28,6 +28,9 @@ namespace SchwammyStreams.Backend.Mini.Converters
             Episode episode = new Episode();
             episode.Title = dto.Title;
             episode.Details = dto.Description;
+            episode.AirDate = dto.OriginalAirDate;
+            episode.Tags = dto.Tags;
+            episode.ArchiveUrl = dto.ArchiveUrl;
 
             return episode;
         }

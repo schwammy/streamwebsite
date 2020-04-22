@@ -77,9 +77,6 @@ namespace SchwammyStreams.Backend.Orchestrators
 
         public async Task<GetEpisodeHistoryResult> GetHistoryAsync(GetHistoryArgsDto getHistoryArgs)
         {
-            
-
-
             // of course, result object can and will be made generic
             GetEpisodeHistoryResult results = new GetEpisodeHistoryResult();
             //todo: Implement paging too.

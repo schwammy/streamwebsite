@@ -11,9 +11,9 @@ namespace SchwammyStreams.Backend.Model
         public int Id { get; set; }
         public string Title { get; set; }
         public string Details { get; set; }
-        //public string ArchiveUrl { get; set; }
-        //public string Tags { get; set; }
-        //public DateTime AirDate { get; set; }
+        public string ArchiveUrl { get; set; }
+        public string Tags { get; set; }
+        public DateTime AirDate { get; set; }
         //public string CreatedBy { get; set; }
         //public string UpdatedBy { get; set; }
         //public DateTime CreateDate { get; set; }
