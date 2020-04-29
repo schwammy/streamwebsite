@@ -43,5 +43,35 @@ namespace SchwammyStreams.Backend.Tests.Mini.Validators.AddEpisodeDtoValidatorTe
 
             messages.Should().NotContain("Air Date must be in the past");
         }
+
+        [Fact]
+        public void GivenDtoWithoutDescription_ThenReturnsErrorMessage()
+        {
+            AddEpisodeDto dto = new AddEpisodeDto();
+            Mock<ICalendar> calendar = new Mock<ICalendar>();
+
+            AddEpisodeDtoValidator sut = new AddEpisodeDtoValidator(calendar.Object);
+
+            var messages = sut.Validate(dto);
+
+            messages.Should().Contain("Description is required.");
+
+        }
+
+        [Fact]
+        public void GivenDtoWithDescription_ThenNoMessageIsReturned()
+        {
+            AddEpisodeDto dto = new AddEpisodeDto();
+            Mock<ICalendar> calendar = new Mock<ICalendar>();
+
+            AddEpisodeDtoValidator sut = new AddEpisodeDtoValidator(calendar.Object);
+
+            dto.Description = "Some text";
+            var messages = sut.Validate(dto);
+
+            messages.Should().NotContain("Description is required.");
+
+        }
+
     }
 }

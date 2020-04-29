@@ -13,6 +13,7 @@ using SchwammyStreams.Backend.Mini.Repositories;
 using SchwammyStreams.Backend.Mini.Validators;
 using SchwammyStreams.Backend.Model;
 using SchwammyStreams.Backend.Orchestrators;
+using Lamar;
 
 namespace SchwammyStreams.Web.AspNet
 {
@@ -25,11 +26,19 @@ namespace SchwammyStreams.Web.AspNet
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureContainer(ServiceRegistry services)
         {
+
+            services.Scan(s =>
+            {
+                s.TheCallingAssembly();
+                s.Assembly("SchwammyStreams.Backend");
+                s.WithDefaultConventions();
+            });
+
+
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+    .AddAzureAD(options => Configuration.Bind("AzureAd", options));
 
             services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme,
                 options =>
@@ -48,15 +57,8 @@ namespace SchwammyStreams.Web.AspNet
                 options => options.UseSqlServer(Configuration["ConnectionString:SchwammyStreamsConnection"]));
 
             services.AddScoped<ISchwammyStreamsDbContext>(provider => provider.GetService<SchwammyStreamsDbContext>());
-
-            services.AddTransient<IEpisodeHistoryOrchestrator, EpisodeHistoryOrchestrator>();
-            services.AddTransient<IGetHistoryDtoValidator, GetHistoryDtoValidator>();
-            services.AddTransient<IEpisodeRepository, EpisodeRepository>();
-            services.AddTransient<IEpisodeHistoryConverter, EpisodeHistoryConverter>();
-            services.AddTransient<IEpisodeDataService, EpisodeDataService>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAddEpisodeDtoValidator, AddEpisodeDtoValidator>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -29,6 +29,12 @@ namespace SchwammyStreams.Backend.Mini.Validators
             {
                 results.Add("Title is required");
             }
+
+            if (string.IsNullOrWhiteSpace(dto.Description))
+            {
+                results.Add("Description is required.");
+            }
+
             if (dto.OriginalAirDate > _calendar.Now)
             {
                 results.Add("Air Date must be in the past");

@@ -14,6 +14,6 @@ namespace SchwammyStreams.Backend.Helpers
         public DateTime Now 
         {
             get { return DateTime.Now; }
-            }
+        }
     }
 }

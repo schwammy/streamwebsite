@@ -30,7 +30,7 @@ namespace SchwammyStreams.Backend.Tests.Mini.Converters.EpisodeHistoryConverterT
             domain.Details.Should().Be(dto.Description);
             domain.ArchiveUrl.Should().Be(dto.ArchiveUrl);
             domain.Tags.Should().Be(dto.Tags);
-            domain.AirDate.Should().Be(dto.OriginalAirDate);
+            domain.OriginalAirDate.Should().Be(dto.OriginalAirDate);
 
 
             //use reflection to get all public properties of the dto
