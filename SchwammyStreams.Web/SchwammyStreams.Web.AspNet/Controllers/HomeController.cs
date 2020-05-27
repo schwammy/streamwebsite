@@ -55,5 +55,19 @@ namespace SchwammyStreams.Web.AspNet.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Search(string searchCriteria)
+        {
+            GetHistoryArgsDto dto = new GetHistoryArgsDto();
+            dto.SearchCriteria = searchCriteria;
+            dto.PageNumber = 1;
+            dto.PageSize = 10;
+            var history = await _episodeHistoryOrchestrator.GetHistoryAsync(dto);
+
+            return View(history.Results);
+        }
+
     }
 }

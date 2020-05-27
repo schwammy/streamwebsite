@@ -30,7 +30,12 @@ namespace SchwammyStreams.Backend.Mini.DataServices
             var result = _episodeRepository.All();
             if (!string.IsNullOrWhiteSpace(parameters.SearchCriteria))
             {
-                result = result.Where(e => e.Title.Contains(parameters.SearchCriteria, StringComparison.OrdinalIgnoreCase));
+                var lowerCaseCriteria = parameters.SearchCriteria.ToLower();
+                result = result.Where(e => 
+                e.Title.ToLower().Contains(lowerCaseCriteria)
+                || e.Details.ToLower().Contains(lowerCaseCriteria)
+                || e.Tags.ToLower().Contains(lowerCaseCriteria)
+                );
             }
             return result;
         }

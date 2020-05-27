@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<SchwammyStreams.Backend.Dto.EpisodeListItemDto>
 @{
     ViewData["Title"] = "Home Page";
-}
 
+}
 <div class="row">
     <div class="col-md-4">
         <img class="img-fluid" src="~/img/schwammy-transparent.png" title="schwammy" alt="schwammy" />
@@ -53,6 +53,16 @@
     </div>
     <div class="col-md-6">
         <h2>Check out the Archives!</h2>
+        <form asp-action="Search">
+            <div class="form-group">
+                <input class="form-control" id="searchCriteria" name="searchCriteria"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+
+
         <table class="table">
             <thead>
                 <tr>
