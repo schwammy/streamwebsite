@@ -41,6 +41,15 @@ namespace SchwammyStreams.Backend.Tests.Mini.Converters.EpisodeHistoryConverterT
             Assert.Equal(episode.Id, dto.Id);
         }
 
+        [Fact]
+        public void GivenAnEpisode_WithTags_ThenTagsIsCopied()
+        {
+            EpisodeHistoryConverter sut = new EpisodeHistoryConverter();
+            Episode episode = new Episode();
+            episode.Tags = "one, two, three";
+            EpisodeListItemDto dto = sut.ToDto(episode);
 
+            dto.Tags.Should().Be(episode.Tags);
+        }
     }
 }

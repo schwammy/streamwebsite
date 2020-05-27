@@ -14,11 +14,14 @@ namespace SchwammyStreams.Backend.Mini.Converters
     {
         public EpisodeListItemDto ToDto(Episode episode)
         {
-            EpisodeListItemDto dto = new EpisodeListItemDto();
-
-            dto.Id = episode.Id;
-            dto.Title = episode.Title;
-            dto.Details = episode.Details;
+            EpisodeListItemDto dto = new EpisodeListItemDto()
+            {
+                Id = episode.Id,
+                Title = episode.Title,
+                Details = episode.Details,
+                ArchiveUrl = episode.ArchiveUrl,
+                Tags = episode.Tags
+            };
 
             return dto;
         }

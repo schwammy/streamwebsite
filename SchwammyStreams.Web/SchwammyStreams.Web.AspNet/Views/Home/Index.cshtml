@@ -67,30 +67,35 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Id)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Details)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tags)
+                    </th>
+                    <th>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Details)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Details)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tags)
+                    </td>
+                    <td>
+                        <a href="@item.ArchiveUrl" target="_blank">watch</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
